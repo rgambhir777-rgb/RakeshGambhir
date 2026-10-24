@@ -1,6 +1,6 @@
 # Rakesh Gambhir · AI FDE profile
 
-A single-page professional profile for GitHub Pages, served at https://rgambhir777-rgb.github.io. It is plain HTML and CSS, with no build step.
+A single-page professional profile for GitHub Pages, served at https://rgambhir777-rgb.github.io/RakeshGambhir/. It is plain HTML and CSS, with no build step.
 
 ## Still to personalise
 
@@ -14,4 +14,4 @@ A single-page professional profile for GitHub Pages, served at https://rgambhir7
 
 ## Publishing
 
-The repo is `rgambhir777-rgb/rgambhir777-rgb.github.io`. Under **Settings → Pages**, set **Source: Deploy from a branch** with **main / (root)**. Every push to `main` redeploys the site.
+The repo is `rgambhir777-rgb/RakeshGambhir`. Under **Settings → Pages**, set **Source: Deploy from a branch** with **main / (root)**. Every push to `main` redeploys the site.
