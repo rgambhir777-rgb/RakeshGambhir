@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rakesh Gambhir · Forward Deployed AI Engineer</title>
+  <meta name="description" content="Forward Deployed Engineer for production AI: agents, LLM cost and tokens, LLM observability, accuracy, bias and hallucination control, and QA automation for AI systems.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,wght@1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --surface: #ffffff;
+      --ink: #14161a;
+      --muted: #5b616b;
+      --line: #e3e3dd;
+      --accent: #0f766e;
+      --accent-soft: #e2f1ef;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --sans: "Inter", system-ui, -apple-system, Segoe UI, sans-serif;
+      --serif: "Source Serif 4", Georgia, serif;
+      --max: 1120px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e1013;
+        --surface: #15181d;
+        --ink: #eceee9;
+        --muted: #9aa1ab;
+        --line: #262a31;
+        --accent: #2dd4bf;
+        --accent-soft: #11302d;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+    .skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: var(--bg); padding: 8px 12px; border-radius: 6px; }
+    .skip:focus { left: 8px; z-index: 100; }
+
+    /* Nav */
+    header.nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .logo { font-weight: 700; text-decoration: none; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+    .logo-mark { width: 28px; height: 28px; border-radius: 7px; background: var(--ink); color: var(--bg); display: grid; place-items: center; font: 500 12px var(--mono); }
+    .nav ul { list-style: none; display: flex; gap: 24px; margin: 0; padding: 0; align-items: center; }
+    .nav ul a { text-decoration: none; color: var(--muted); font-size: 14px; }
+    .nav ul a:hover { color: var(--ink); }
+    .btn { display: inline-block; text-decoration: none; padding: 11px 18px; border-radius: 8px; font-weight: 600; font-size: 15px; border: 1px solid var(--ink); }
+    .btn-primary { background: var(--ink); color: var(--bg) !important; }
+    .btn-ghost { color: var(--ink); }
+    .nav .btn { padding: 8px 14px; font-size: 14px; }
+    @media (max-width: 860px) { .nav ul li:not(:last-child) { display: none; } }
+
+    /* Sections */
+    section { padding: 96px 0; border-bottom: 1px solid var(--line); }
+    .eyebrow { font: 500 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 16px; }
+    h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+    h1 { font-size: clamp(38px, 6vw, 64px); font-weight: 700; max-width: 16ch; }
+    h1 em, h2 em { font-family: var(--serif); font-weight: 500; color: var(--accent); }
+    h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; max-width: 22ch; }
+    h2 .sub { display: block; color: var(--muted); font-weight: 500; }
+    h3 { font-size: 19px; font-weight: 600; }
+    .lead { font-size: 19px; color: var(--muted); max-width: 60ch; margin: 24px 0 0; }
+    .section-head { margin-bottom: 48px; }
+
+    /* Hero */
+    .hero { padding: 104px 0 88px; }
+    .hero .actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+
+    /* Stack diagram */
+    .stack-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: center; }
+    .stack { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 18px; position: relative; }
+    .stack-label { font: 500 11px var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; display: flex; justify-content: space-between; padding: 0 4px 12px; }
+    .layer { display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; margin-top: 8px; background: var(--bg); }
+    .layer .n { font: 500 12px var(--mono); color: var(--accent); }
+    .layer strong { font-size: 15px; display: block; }
+    .layer span { font-size: 13px; color: var(--muted); }
+    .layer .tag { font: 500 11px var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
+    .layer.edge { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+    @media (max-width: 860px) { .stack-grid { grid-template-columns: 1fr; } .layer .tag { display: none; } .layer { grid-template-columns: 32px 1fr; } }
+
+    /* Stats */
+    .stats { padding: 48px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .stat strong { display: block; font-size: 28px; letter-spacing: -0.02em; }
+    .stat span { color: var(--muted); font-size: 14px; }
+    @media (max-width: 760px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .card .n { font: 500 12px var(--mono); color: var(--accent); }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    .card ul { margin: 4px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .card ul li { margin: 4px 0; }
+    .card.wide { grid-column: span 2; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 8px; }
+    .chip { font: 500 11px var(--mono); padding: 3px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+    @media (max-width: 960px) { .cards { grid-template-columns: 1fr 1fr; } .card.wide { grid-column: span 2; } }
+    @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } .card.wide { grid-column: span 1; } }
+
+    /* FDE timeline */
+    .phases { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); }
+    .phase { padding: 24px 20px; border-right: 1px solid var(--line); }
+    .phase:last-child { border-right: 0; }
+    .phase .n { font: 500 12px var(--mono); color: var(--accent); }
+    .phase h3 { margin: 8px 0 10px; font-size: 17px; }
+    .phase p { margin: 0; font-size: 14px; color: var(--muted); }
+    .phase .out { margin-top: 14px; font: 500 11px var(--mono); color: var(--ink); border-top: 1px dashed var(--line); padding-top: 10px; }
+    @media (max-width: 960px) { .phases { grid-template-columns: 1fr; } .phase { border-right: 0; border-bottom: 1px solid var(--line); } .phase:last-child { border-bottom: 0; } }
+    .fde-quote { margin-top: 40px; font-family: var(--serif); font-style: italic; font-size: 22px; max-width: 48ch; color: var(--ink); border-left: 3px solid var(--accent); padding-left: 20px; }
+
+    /* Principles */
+    .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .principle .n { font: 500 12px var(--mono); color: var(--accent); }
+    .principle h3 { margin: 10px 0; }
+    .principle p { margin: 0; color: var(--muted); }
+    @media (max-width: 860px) { .principles { grid-template-columns: 1fr; } }
+
+    /* Work */
+    .work .card a.repo { margin-top: auto; font: 500 13px var(--mono); color: var(--accent); text-decoration: none; }
+    .work .card a.repo:hover { text-decoration: underline; }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; }
+    .about-grid p { color: var(--muted); margin: 0 0 16px; }
+    .links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+    .links a { font: 500 14px var(--mono); color: var(--accent); text-decoration: none; }
+    .toolbox { margin-top: 28px; }
+    .toolbox h3 { font-size: 13px; font-family: var(--mono); font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+    /* Contact */
+    .contact { text-align: left; border-bottom: 0; }
+    .contact .actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+
+    footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="logo" href="#top"><span class="logo-mark">RG</span>Rakesh Gambhir</a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#focus">Focus areas</a></li>
+          <li><a href="#fde">FDE model</a></li>
+          <li><a href="#approach">Approach</a></li>
+          <li><a href="#work">Selected work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a class="btn btn-primary" href="#contact">Get in touch</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <p class="eyebrow">Forward Deployed Engineer · Production AI · QA &amp; reliability</p>
+        <h1>AI systems that ship to production and <em>stay trustworthy there.</em></h1>
+        <p class="lead">I work inside customer teams to take agents and LLM applications from demo to dependable. That means measured cost, traced behavior, controlled hallucination and bias, and automated quality gates that keep everything honest after launch.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contact">Start a conversation</a>
+          <a class="btn btn-ghost" href="#focus">See focus areas</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack view -->
+    <section>
+      <div class="wrap stack-grid">
+        <div>
+          <p class="eyebrow">The system I own</p>
+          <h2>Five layers between a model and a business outcome.</h2>
+          <p class="lead">Most AI projects stall in the gap between "it works in the notebook" and "we trust it with customers." I sit in that gap, on site with the team, and close it one layer at a time.</p>
+        </div>
+        <div class="stack" aria-label="Production AI stack">
+          <div class="stack-label"><span>Customer environment</span><span>Owned end-to-end</span></div>
+          <div class="layer edge"><span class="n">05</span><div><strong>Quality gates &amp; QA automation</strong><span>Eval suites in CI, regression on every prompt change</span></div><span class="tag">ship / block</span></div>
+          <div class="layer"><span class="n">04</span><div><strong>Accuracy, bias &amp; hallucination control</strong><span>Grounding checks, fairness slices, refusal policy</span></div><span class="tag">trust</span></div>
+          <div class="layer"><span class="n">03</span><div><strong>LLM observability</strong><span>Traces, spans, tool calls, drift and quality signals</span></div><span class="tag">see</span></div>
+          <div class="layer"><span class="n">02</span><div><strong>Tokens &amp; cost</strong><span>Budgets, caching, routing, cost per successful task</span></div><span class="tag">$ / task</span></div>
+          <div class="layer"><span class="n">01</span><div><strong>Agents &amp; orchestration</strong><span>Tools, memory, planning, human-in-the-loop</span></div><span class="tag">act</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Credentials strip (EDIT these to your real numbers) -->
+    <section class="stats">
+      <div class="wrap stats-grid">
+        <div class="stat"><strong>10+ yrs</strong><span>Quality engineering &amp; test automation</span></div>
+        <div class="stat"><strong>LLM evals</strong><span>Automated in CI/CD pipelines</span></div>
+        <div class="stat"><strong>Agents</strong><span>Built, instrumented and tested in production</span></div>
+        <div class="stat"><strong>Customer-facing</strong><span>Embedded delivery with engineering and business teams</span></div>
+      </div>
+    </section>
+
+    <!-- Focus areas -->
+    <section id="focus">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Focus areas</p>
+          <h2>Where AI projects fail quietly, <span class="sub">and where I specialise.</span></h2>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="n">01</span>
+            <h3>Agentic systems</h3>
+            <p>Agents that call tools, plan over several steps and hand off to humans when they should.</p>
+            <ul>
+              <li>Tool design, guardrails and permission boundaries</li>
+              <li>Trajectory and step-level evaluation, not just final answers</li>
+              <li>Failure recovery, retries and loop detection</li>
+            </ul>
+            <div class="chips"><span class="chip">LangGraph</span><span class="chip">MCP</span><span class="chip">tool use</span></div>
+          </article>
+          <article class="card">
+            <span class="n">02</span>
+            <h3>LLM cost &amp; tokens</h3>
+            <p>Token spend treated as an engineering metric, with owners and budgets.</p>
+            <ul>
+              <li>Cost per successful task, not cost per call</li>
+              <li>Prompt caching, context trimming, model routing</li>
+              <li>Budget alerts and per-feature cost attribution</li>
+            </ul>
+            <div class="chips"><span class="chip">token budgets</span><span class="chip">caching</span><span class="chip">routing</span></div>
+          </article>
+          <article class="card">
+            <span class="n">03</span>
+            <h3>LLM observability</h3>
+            <p>Seeing what the model and agent actually did, why, and what it cost.</p>
+            <ul>
+              <li>End-to-end tracing of prompts, retrievals and tool calls</li>
+              <li>Latency, error and quality dashboards per release</li>
+              <li>Drift detection and production sampling for review</li>
+            </ul>
+            <div class="chips"><span class="chip">OpenTelemetry</span><span class="chip">Langfuse</span><span class="chip">Arize</span></div>
+          </article>
+          <article class="card wide">
+            <span class="n">04</span>
+            <h3>Accuracy, bias &amp; hallucination management</h3>
+            <p>Trust is designed and measured, not hoped for. I define what "correct" means with the customer, then make it testable.</p>
+            <ul>
+              <li>Golden datasets and rubric-based LLM-as-judge, calibrated against human labels</li>
+              <li>Groundedness and citation checks for RAG; hallucination rate tracked per release</li>
+              <li>Bias and fairness evaluation across user segments, with documented thresholds</li>
+              <li>Red-teaming, prompt-injection testing and safe-refusal behavior</li>
+            </ul>
+            <div class="chips"><span class="chip">evals</span><span class="chip">groundedness</span><span class="chip">fairness slices</span><span class="chip">red-teaming</span></div>
+          </article>
+          <article class="card">
+            <span class="n">05</span>
+            <h3>QA &amp; QA automation for AI</h3>
+            <p>Classic quality engineering adapted to systems that don't give the same answer twice.</p>
+            <ul>
+              <li>Eval suites running in CI as release gates</li>
+              <li>Regression tests for prompts, models and retrieval</li>
+              <li>Statistical pass criteria for non-deterministic output</li>
+            </ul>
+            <div class="chips"><span class="chip">pytest</span><span class="chip">promptfoo</span><span class="chip">GitHub Actions</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FDE model -->
+    <section id="fde">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Forward Deployed Engineering</p>
+          <h2>Embedded with the customer. <span class="sub">Accountable for the outcome.</span></h2>
+          <p class="lead">A Forward Deployed Engineer works where the problem is: in the customer's data, constraints and workflows. I bring all five focus areas into one engagement, so the result is a system the customer can run, measure and trust after I hand it over.</p>
+        </div>
+        <div class="phases">
+          <div class="phase">
+            <span class="n">01</span>
+            <h3>Discover</h3>
+            <p>Map the workflow, the data and the real cost of a wrong answer. Agree on what success means.</p>
+            <div class="out">→ success criteria &amp; risk map</div>
+          </div>
+          <div class="phase">
+            <span class="n">02</span>
+            <h3>Prototype</h3>
+            <p>Build the smallest agent or LLM flow that proves value on real customer data.</p>
+            <div class="out">→ working agent + baseline evals</div>
+          </div>
+          <div class="phase">
+            <span class="n">03</span>
+            <h3>Harden</h3>
+            <p>Test for accuracy, bias and hallucination. Add guardrails, then optimise tokens and latency.</p>
+            <div class="out">→ eval suite &amp; cost model</div>
+          </div>
+          <div class="phase">
+            <span class="n">04</span>
+            <h3>Deploy</h3>
+            <p>Ship behind automated quality gates, with tracing and dashboards in place from day one.</p>
+            <div class="out">→ CI gates &amp; observability</div>
+          </div>
+          <div class="phase">
+            <span class="n">05</span>
+            <h3>Operate &amp; hand over</h3>
+            <p>Monitor drift and spend, run regressions, and train the team to own it.</p>
+            <div class="out">→ runbooks &amp; team enablement</div>
+          </div>
+        </div>
+        <p class="fde-quote">An FDE's job isn't finished at the demo. It's finished when the customer trusts the system without me in the room.</p>
+      </div>
+    </section>
+
+    <!-- Approach -->
+    <section id="approach">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Approach</p>
+          <h2>Measure first. <span class="sub">Then ship, then keep measuring.</span></h2>
+        </div>
+        <div class="principles">
+          <div class="principle">
+            <span class="n">01</span>
+            <h3>If it isn't evaluated, it isn't done</h3>
+            <p>Every prompt, model or tool change runs against a versioned eval set before it reaches users. Quality is a gate, not an afterthought.</p>
+          </div>
+          <div class="principle">
+            <span class="n">02</span>
+            <h3>Cost is a quality attribute</h3>
+            <p>A correct answer that costs ten times too much is a failed release. Tokens, latency and accuracy are tracked together.</p>
+          </div>
+          <div class="principle">
+            <span class="n">03</span>
+            <h3>Observable by default</h3>
+            <p>Every agent step is traced and every failure is explainable. When something goes wrong, the team can see why in minutes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Selected work (EDIT: replace with your real projects and repo links) -->
+    <section id="work" class="work">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Selected work</p>
+          <h2>Proof in working code.</h2>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="n">Agent QA</span>
+            <h3>Agent evaluation harness</h3>
+            <p>A test framework that scores multi-step agent trajectories for tool choice, step efficiency and final-answer correctness, and runs in CI on every pull request.</p>
+            <div class="chips"><span class="chip">Python</span><span class="chip">pytest</span><span class="chip">LLM-as-judge</span></div>
+            <a class="repo" href="https://github.com/rgambhir777-rgb/agent-eval-harness">github.com/…/agent-eval-harness →</a>
+          </article>
+          <article class="card">
+            <span class="n">Cost</span>
+            <h3>Token cost &amp; latency observatory</h3>
+            <p>Tracing and dashboards that attribute token spend and latency to each feature and agent step. Includes caching and routing experiments with measured savings.</p>
+            <div class="chips"><span class="chip">OpenTelemetry</span><span class="chip">Grafana</span><span class="chip">caching</span></div>
+            <a class="repo" href="https://github.com/rgambhir777-rgb/llm-cost-observatory">github.com/…/llm-cost-observatory →</a>
+          </article>
+          <article class="card">
+            <span class="n">Trust</span>
+            <h3>Hallucination &amp; bias regression suite</h3>
+            <p>A golden dataset with groundedness, citation and fairness-slice metrics, tracked release over release, with thresholds that block deployment.</p>
+            <div class="chips"><span class="chip">RAG evals</span><span class="chip">fairness</span><span class="chip">GitHub Actions</span></div>
+            <a class="repo" href="https://github.com/rgambhir777-rgb/llm-trust-suite">github.com/…/llm-trust-suite →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- About (EDIT: your story) -->
+    <section id="about">
+      <div class="wrap about-grid">
+        <div>
+          <p class="eyebrow">About</p>
+          <h2>Quality engineering, <span class="sub">rebuilt for AI.</span></h2>
+        </div>
+        <div>
+          <p>I'm Rakesh Gambhir, an engineer with a background in quality assurance and test automation who now works on the hardest part of applied AI: making it reliable in someone else's production environment.</p>
+          <p>I've spent my career building automated test strategies and release pipelines. Today I apply that discipline to agents and LLM applications: evaluating them, tracing them, controlling their cost, and keeping their accuracy, bias and hallucination rates where the business needs them.</p>
+          <p>I work best as a Forward Deployed Engineer: next to the customer, close to their data, and accountable for whether the system actually works.</p>
+          <div class="links">
+            <a href="https://www.linkedin.com/in/your-profile">LinkedIn →</a>
+            <a href="https://github.com/rgambhir777-rgb">GitHub →</a>
+          </div>
+          <div class="toolbox">
+            <h3>Toolbox</h3>
+            <div class="chips">
+              <span class="chip">Python</span><span class="chip">TypeScript</span><span class="chip">LangGraph</span><span class="chip">MCP</span>
+              <span class="chip">OpenTelemetry</span><span class="chip">Langfuse</span><span class="chip">promptfoo</span><span class="chip">pytest</span>
+              <span class="chip">Playwright</span><span class="chip">GitHub Actions</span><span class="chip">Docker</span><span class="chip">AWS / Azure / GCP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <p class="eyebrow">Contact</p>
+        <h2>Have an AI system that works in the demo <em>but not in production?</em></h2>
+        <p class="lead">I'm open to Forward Deployed Engineer roles and to engagements focused on agent reliability, LLM cost, observability and AI quality automation.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="mailto:you@example.com">Email me</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/your-profile">Connect on LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Rakesh Gambhir · Forward Deployed AI Engineer</span>
+      <span>© <span id="yr">2026</span></span>
+    </div>
+  </footer>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
