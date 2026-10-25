@@ -83,6 +83,10 @@
     /* Hero */
     .hero { padding: 88px 0 96px; }
     .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center; }
+    .idline { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; row-gap: 6px; margin: 0 0 -24px; padding-bottom: 18px; border-bottom: 1px solid var(--line); font: 500 13px var(--mono); color: var(--muted); }
+    .idline span + span::before { content: "|"; color: var(--amber); margin: 0 12px; }
+    .idline .id-name { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+    @media (max-width: 640px) { .idline .id-name { flex-basis: 100%; } .idline .id-name + span::before { content: none; } }
     .hero .actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
     .trace { overflow: hidden; box-shadow: 0 30px 80px -30px rgba(0,0,0,0.7), 0 0 0 1px rgba(245,165,36,0.06); }
     .trace-top { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line); font: 400 12px var(--mono); color: var(--muted); }
@@ -244,8 +248,14 @@
     <!-- Hero -->
     <section class="hero" id="top">
       <div class="wrap hero-grid">
+        <p class="idline">
+          <span class="id-name">Rakesh Gambhir</span>
+          <span>Forward Deployed Engineer</span>
+          <span>AI Agents</span>
+          <span>LLM Cost &amp; Observability</span>
+          <span>AI QA Automation</span>
+        </p>
         <div>
-          <p class="kicker">Forward Deployed Engineer · Production AI · QA &amp; reliability</p>
           <h1>AI systems that ship to production and <span class="hl">stay trustworthy there.</span></h1>
           <p class="lead">I work inside customer teams to take agents and LLM applications from demo to dependable. That means measured cost, traced behavior, controlled hallucination and bias, and automated quality gates that keep everything honest after launch.</p>
           <div class="actions">
